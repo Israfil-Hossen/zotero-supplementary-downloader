@@ -1,0 +1,43 @@
+name: Build XPI
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version from manifest
+        id: version
+        run: echo "version=$(jq -r '.version' manifest.json)" >> $GITHUB_OUTPUT
+
+      - name: Build XPI
+        run: |
+          zip -r zotero-supplementary-downloader-${{ steps.version.outputs.version }}.xpi \
+            manifest.json \
+            bootstrap.js \
+            supplementary.js \
+            icon.png \
+            icon@2x.png \
+            LICENSE
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: zotero-supplementary-downloader-*.xpi
+          generate_release_notes: true
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: xpi
+          path: zotero-supplementary-downloader-*.xpi

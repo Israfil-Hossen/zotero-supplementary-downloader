@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Zotero Supplementary File Downloader",
+  "version": "1.2.0",
+  "description": "Downloads and attaches supplementary/supporting files from publisher websites to Zotero items.",
+  "homepage_url": "https://github.com/Israfil-Hossen/zotero-supplementary-downloader",
+  "icons": {
+    "48": "icon.png",
+    "96": "icon@2x.png"
+  },
+  "applications": {
+    "zotero": {
+      "id": "suppl-dl@example.com",
+      "update_url": "https://raw.githubusercontent.com/Israfil-Hossen/zotero-supplementary-downloader/main/updates.json",
+      "strict_min_version": "6.999",
+      "strict_max_version": "8.0.*"
+    }
+  }
+}
