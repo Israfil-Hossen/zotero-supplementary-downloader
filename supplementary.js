@@ -180,12 +180,24 @@ SupplementaryDownloader = {
         /href="([^"]*appendix[^"]*\.\w{2,5})"/gi,
       ];
     }
-    // Springer / Nature
-    else if (domain.includes("nature.com") || domain.includes("springer.com") || domain.includes("springerlink.com")) {
+    // BMC / BioMed Central / Springer / Nature / SpringerLink
+    else if (domain.includes("nature.com") || domain.includes("springer.com") || domain.includes("springerlink.com") || domain.includes("biomedcentral.com")) {
       patterns = [
+        // MediaObjects (main pattern for BMC/Springer supplementary files)
+        /href="([^"]*MediaObjects\/[^"]*\.\w{2,5})"/gi,
+        // static-content.springer.com ESM files
+        /href="([^"]*static-content\.springer\.com[^"]*\.\w{2,5})"/gi,
+        // MOESM pattern (Nature style)
+        /href="([^"]*MOESM\d+[^"]*\.\w{2,5})"/gi,
+        // ESM pattern
+        /href="([^"]*ESM[_\d][^"]*\.\w{2,5})"/gi,
+        // Figshare supplementary files
+        /href="([^"]*figshare\.com\/[^"]*(?:download|ndownloader|files)[^"]*)"/gi,
+        // "Additional file" or "Supplementary" links
         /href="([^"]*suppl(?:ementary|emental)[^"]*\.\w{2,5})"/gi,
-        /href="([^"]*MOESM\d+_ESM\.\w{2,5})"/gi,
         /href="([^"]*(?:supplementary|additional)[_-]?(?:file|data|info|table|figure)[^"]*\.\w{2,5})"/gi,
+        // Direct PDF/file links with article identifier pattern
+        /href="([^"]*(?:\/esm\/|\/suppl\/|\/supplement\/)[^"]*\.\w{2,5})"/gi,
       ];
     }
     // Wiley
